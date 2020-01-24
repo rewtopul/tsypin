@@ -10,6 +10,10 @@ mysqli_select_db($connection,"bd_clients");
 //контроль соединения
 if(!$connection) {
 	die("Не удалось подключиться к базе данных");// если подключится появиться пустая страница
-}
+} 
+date_default_timezone_set('Europe/Tallinn');
+
+$connection->set_charset('utf8');
+
 ?>
 
