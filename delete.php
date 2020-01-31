@@ -21,9 +21,8 @@ include 'config.php';
  $delete_value = mysqli_query ($connection, $delete_sql);
  if($delete_vlue) {
  	echo"Строка удалена!";
- 	echo'<META HTTP-EQUIV="Refresh" Content="0; URL='.
- 	$_SERVER['PHP_SELF'].'">';
- 	 } else{ 
+ 	echo'<META HTTP-EQUIV="Refresh" Content="0; URL='.$_SERVER['PHP_SELF'].'">';
+ 	 }else{ 
  	 	echo"Ошибка при удалении !";
  	 }
 
