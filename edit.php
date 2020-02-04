@@ -1,59 +1,56 @@
 <?php
 include 'config.php';
- ?>
- <?php
- //Проверка
- if(empty($_GET['id'])) {
- 	die ('Цель не была выбрана!');
- } else {
- 	$id = $_GET['id'];
- // Запрос
-    $request="SELECT * FROM articles WHERE id='$id'";
-    $output = mysqli_query($connection, $request);
-    $sline = mysqli_fetch_assoc($output);
- // Редактировать запрос
-    if (!empty($_POST['title'])) {
-    	$title = htmlspecialchars(trim($_POST['title']));
-    	$text = htmlspecialchars(trim($_POST['text']));
-    	$date = htmlspecialchars(trim($_POST['date']));
-    }
- }
-
- ?>
-
-
- while ($line=mysqli_fetch_array($checkSQL)) {
- echo'<div>
- <h3>'.$line['title'].'</h3>
- <p>'.$line['text'].'</p>
- <p>'.$line['date'].'</p>
- <button>
- <a href="edit.php?id='.$line["id"].'">обновить</a>
- </button>
- </div>';
- }
- ?>
- 
+?>
+<?php
+//проверка
+if(empty($_GET['id'])){
+die('Цель не была выбрана!');
+} else {
+$id = $_GET['id'];
+//запрос
+$request="SELECT * FROM articles WHERE id='$id'";
+$output = mysqli_query($connection, $request);
+$line = mysqli_fetch_assoc($output);
+//редактировать запрос
+if(!empty($_POST['title'])){
+$title = htmlspecialchars(trim($_POST['title']));
+$text = htmlspecialchars(trim($_POST['text']));
+$date = htmlspecialchars(trim($_POST['date']));
+// Запрос на обновление
+$edit = "UPDATE articles 
+     SET title = '".$title."',
+     text = '$text',
+     date = '$date'
+     WHERE id = '$id'";
+// Добовляем сравнение     
+$edit_db = mysqli_query($connection, $edit);
+if ($edit_db) {
+	echo"успешно отредактировано, перенаправление
+	<a href = \"content.php\">назад</a>";
+	die();
+}else{
+	echo "какая то ерунда";
+}
+   }
+  }
+?>
 <form method="post">
+   <div>
+    <label>Title</label>
+       <textarea type="text" name="title" required>
+    <?php echo $line['title'];?></textarea>
+    </div>
 <div>
-<label>Title</label>
-<input type="text" name="title"
-value="<?php echo $line['title'];?>"requeed>
+    <label>Text</label>
+       <textarea type="text" name="text"required>
+    <?php echo $line['text'];?></textarea>
 </div>
 <div>
-<label>Text</label>
-<input type="text" name="text" rows="5"
-value="<?php echo $line['text'];?>"requeed>
+    <label>Date</label>
+       <input type="date" name="date"
+       value="<?php echo $line['date'];?>" required>
 </div>
-<div>
-<label>Date</label>
-<input type="date" name="date"
-value="<?php echo $line['date'];?>"requeed>
-</div>
-<div><button type= "submit" value="edit">редактировать</button></div>
-
-
+    <div><button type="submit"
+       value="edit">редактировать</button></div>
 </form>
-</div>
-</body>
-</html>
+
