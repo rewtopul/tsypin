@@ -1,10 +1,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Вход</title>
+    <h1><strong>Вход</strong></h1>
+    <link rel="stylesheet" href="style.css"> <!--форма для поключения CSS-->
 </head>
 <body>
-    <form method = "post">
+    <form method = "post"> <!-- Метод для регистрации-->
         <div>
             <label>Имя пользователя</label>
             <input type = "text" name = "username" required>
@@ -15,22 +17,11 @@
             <label>Пароль</label>
         <input type = "password" name = "password" required
         pattern = ".{6,12}" placeholder = "(6 - 12 символов)" required>
-    </div>
-    <br>
-    <div>
-        <label>Пароль ещё раз</label>
-        <input type = "password" name = "password2" required
-        pattern = ".{6,12}" placeholder = "(6 - 12 символов)" required>
-    </div>
-    <br>
-
-    <div>
-        <label>Email</label>
-        <input type="email" name="email"
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
-    </div>
-    <input type = "submit" name="registration"
-    value = "Регистрация">
+       </div>
+       <br>
+       <input type="submit" value="Вход">
+       <a href="registration.php">Зарегистрираваться</a>
+    
 </form>
 
 </body>
