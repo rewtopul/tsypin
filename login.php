@@ -1,3 +1,32 @@
+<?php
+include("config.php");
+?>
+<?php
+session_start();//
+if (isset($_SESSION['authentication'])) {
+    header ('Location: content.php');
+    exit ();
+}
+if (!empty($_POST['username']) && !empty($_POST['password'])) {
+    $username = htmlspecialchars(trim($_POST['username']));
+    $password = htmlspecialchars(trim($_POST['password']));
+    $salt='loremipsumdolorsitamet'; // добавляем соль
+    $kryp = crypt($password, $salt);//Добовляем шифрование и подсаливаем
+    $paring = "SELECT * FROM users WHERE username = '$username' AND password = '$kryp'";
+    $output = mysqli_query ($connection, $paring);
+
+    if (mysqli_num_rows ($output) ==1) {
+        $_SESSION ['authentication'] = 'whatever';
+    header('Location: content.php');
+    }else {
+    echo "не правильный логин или пароль";
+    }
+ }
+
+?>
+
+
+
 <html>
 <head>
     <meta charset="UTF-8">

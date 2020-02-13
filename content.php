@@ -37,6 +37,13 @@ echo "Ошибка при удаление!";
 }
 }
 ?>
+<?php
+session_start();
+if (isset($_SESSION['authentication'])) {
+    header ('Location: login.php');
+    exit ();
+   }
+ ?>
 <html>
 <head>
 <title>Content</title>
@@ -61,6 +68,9 @@ echo "Ошибка при удаление!";
 
 </form>
 </div>
+<form action = "logout.php" method="post">
+	<input type="submit" value="Выйти" name="logout">
+</form>
 <br>
 <?php
 while($line = mysqli_fetch_array($checkSQL)){
