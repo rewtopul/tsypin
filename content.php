@@ -9,11 +9,14 @@ $title = htmlspecialchars(trim($_POST['title']));
 $text = htmlspecialchars(trim($_POST['text']));
 $date = htmlspecialchars(trim($_POST['date']));
 }
+
 //запрос
 $query="INSERT INTO articles(title,text,date) VALUES('".$title."','".$text."','".$date."')";
 $output=mysqli_query($connection, $query);
+
 //количество ответов на запрос
 $result=mysqli_affected_rows($connection);
+
 //mysqli_affected_rows() проверяет, сколько запросов было сделано
 if ($result == 1) {
 echo "Запись успешно добавлена";
@@ -21,10 +24,13 @@ echo "Запись успешно добавлена";
 echo "Запись не добавлена";
 }
 }
+
 //вывод
 $checkSQL=mysqli_query($connection, 'SELECT * FROM articles');
+
 //удаление
 if(!empty($_GET['id'])){
+
 //удаляем запрос
 $id = $_GET['id'];
 $delete_sql = "DELETE FROM articles WHERE id='$id'";
@@ -39,17 +45,21 @@ echo "Ошибка при удаление!";
 ?>
 <?php
 session_start();
-if (isset($_SESSION['authentication'])) {
-    header ('Location: login.php');
-    exit ();
-   }
- ?>
+if (!isset($_SESSION['authentication'])) {
+header('Location: login.php');
+exit();
+}
+?>
 <html>
 <head>
 <title>Content</title>
 <meta charset="utf-8">
 </head>
 <body>
+
+<form action="logout.php" method="post">
+<input type="submit" value="Выйти" name="logout">
+</form>
 <div style="height:300px;">
 <form method="post" action="">
 <div>
@@ -68,9 +78,6 @@ if (isset($_SESSION['authentication'])) {
 
 </form>
 </div>
-<form action = "logout.php" method="post">
-	<input type="submit" value="Выйти" name="logout">
-</form>
 <br>
 <?php
 while($line = mysqli_fetch_array($checkSQL)){
@@ -82,17 +89,15 @@ echo '<div>
 <a href="'.$_SERVER['PHP_SELF'].'?id='.$line["id"].'">
 удалить</a>
 </button>
-
 <button>
-<a href="edit.php?id='.$line["id"].'">Обновить</a>
+<a href="edit.php?id='.$line["id"].'">обновить</a>
 </button>
-
 <button>
-<a href="view.php?id='.$line['id'].'">Просмотр</a>
+<a href="view.php?id='.$line['id'].'">просмотр</a>
 </button>
-
 </div>';
 }
 ?>
 </body>
 </html>
+

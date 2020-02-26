@@ -2,7 +2,8 @@
 include("config.php");
 ?>
 <?php
-if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'])) {
+if (!empty($_POST['username']) && !empty($_POST['password'])
+&& !empty($_POST['email']) && !empty($_POST['name'])) {
 $username = htmlspecialchars(trim($_POST['username']));
 $password = htmlspecialchars(trim($_POST['password']));
 $password2 = htmlspecialchars(trim($_POST['password2']));
@@ -12,11 +13,11 @@ $name = htmlspecialchars(trim($_POST['name']));
 if (strlen($password) < 6) {
 echo "Пароль должен быть не менее 6 символов";
 } else {
-	if ($password != $password2) {
-		echo "Пароли не совпадают";
-	}else{ 
+if ($password != $password2){
+echo "Пароли не совпадают";
+}else{
 $salt='loremipsumdolorsitamet'; // добавляем соль
-$kryp = crypt($password, $salt);//Добовляем шифрование и подсаливаем
+$kryp = crypt($password, $salt);
 $output=mysqli_query($connection, "SELECT * FROM users WHERE username = '{$username}'");
 if (mysqli_num_rows($output) > 0) {
 echo "такой логин уже есть!";
@@ -27,17 +28,17 @@ if (mysqli_affected_rows($connection)==1) {
 header('Location: login.php?msg=ok');
 }else{
 echo "неправильный логин или пароль";
-    }
-   }
-  }
-  }
+}
+}
+}
+}
 }
 ?>
 
 <html>
 <head>
 <title>Регистрация</title>
-<h1><strong>Регистраци</strong></h1>
+<h1><strong>Регистрация</strong></h1>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -47,27 +48,22 @@ echo "неправильный логин или пароль";
 <label>Имя пользователя</label>
 <input type="text" name="username" required>
 </div>
-<br>
 <div>
 <label>Пароль</label>
 <input type="password" name="password"  pattern=".{6,12}" placeholder="(6 - 12 символов)"  required>
 </div>
-<br>
 <div>
 <label>Пароль еще раз</label>
 <input type="password" name="password2"  pattern=".{6,12}" placeholder="(6 - 12 символов)"  required>
 </div>
-<br>
 <div>
 <label>Email</label>
 <input type="email" name="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  required>
 </div>
-<br>
 <div>
 <label>Имя и Фамилия</label>
 <input type="text" name="name">
 </div>
-<br>
 <input type="submit" name="registration"
 value="Регистрация">
 </form>
