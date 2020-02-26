@@ -14,3 +14,7 @@ margin: 5px;
 label {
 font-family: 'Roboto', sans-serif;
 }
+
+img {
+	height: 400px;
+}
